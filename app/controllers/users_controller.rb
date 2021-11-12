@@ -14,23 +14,18 @@ class UsersController < ApplicationController
   end
 
   # POST /users
-  def create
-    @user = User.new(user_params)
-
-    if @user.save
-      render json: @user, status: :created, location: @user
-    else
-      render json: @user.errors, status: :unprocessable_entity
-    end
+   def create
+    user = User.create!(user_params)
+    session[:user_id] = user.id
+    render json: user, status: :created
   end
 
   # PATCH/PUT /users/1
   def update
-    if @user.update(user_params)
-      render json: @user
-    else
-      render json: @user.errors, status: :unprocessable_entity
-    end
+    user = User.find(params[:id])
+    user.update!(password: params[:password])
+
+    render json: user, status: :ok
   end
 
   # DELETE /users/1
