@@ -16,6 +16,7 @@ puts "..🌰..Seeding Database..🌰.."
         phone: Faker::PhoneNumber.phone_number,
         password: "1234",
         avatar_url: Faker::Avatar.image,
+        team_id: Faker::Number.between(1, 4)
         )
      end
 
@@ -28,7 +29,7 @@ puts "..🌰..Seeding Database..🌰.."
         issue_description: Faker::Lorem.paragraph,
         submitted_by: Faker::Number.between(1, 10),
         image_url: Faker::Fillmurray.image,
-        creator_id: Faker::Number.between(1, 10),
+        creator: Faker::Number.between(1, 10),
         comment_id: Faker::Number.between(1, 75),
         created_on: Faker::Date.between(14.days.ago, Date.today),
         )
@@ -37,8 +38,8 @@ puts "..🌰..Seeding Database..🌰.."
      75.times do
         comment = Comment.create(
         text: Faker::ChuckNorris.fact,
-        created_on: Faker::Date.between(14.days.ago, Date.today),
-        creator_id: Faker::Number.between(1, 10),
+        created: Faker::Date.between(14.days.ago, Date.today),
+        creator: Faker::Number.between(1, 10),
         )
      end
 
