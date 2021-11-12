@@ -21,7 +21,7 @@ puts "..🌰..Seeding Database..🌰.."
 
      50.times do
         ticket = Ticket.create(
-        name: Faker::GreekPhilosophers.name,
+        name: Faker::Hipster.sentence(word_count: 3),
         type: Faker::Number.between(1,5),
         department: Faker::Number.between(1, 4),
         priority: Faker::Number.between(1, 3),
@@ -36,7 +36,7 @@ puts "..🌰..Seeding Database..🌰.."
 
      75.times do
         comment = Comment.create(
-        text: Faker::Lorem.paragraph,
+        text: Faker::ChuckNorris.fact,
         created_on: Faker::Date.between(14.days.ago, Date.today),
         creator_id: Faker::Number.between(1, 10),
         )
