@@ -16,44 +16,44 @@ puts "..🌰..Seeding Database..🌰.."
         phone: Faker::PhoneNumber.phone_number,
         password: "1234",
         avatar_url: Faker::Avatar.image,
-        team_id: Faker::Number.between(1, 4)
+        team_id: Faker::Number.between(from: 1, to: 4)
         )
      end
 
      50.times do
         ticket = Ticket.create(
         name: Faker::Hipster.sentence(word_count: 3),
-        type: Faker::Number.between(1,5),
-        department: Faker::Number.between(1, 4),
-        priority: Faker::Number.between(1, 3),
+        category: Faker::Number.between(from: 1, to: 5),
+        department: Faker::Number.between(from: 1, to: 4),
+        priority: Faker::Number.between(from: 1, to: 3),
         issue_description: Faker::Lorem.paragraph,
-        submitted_by: Faker::Number.between(1, 10),
+        submitted_by: Faker::Number.between(from: 1, to: 10),
         image_url: Faker::Fillmurray.image,
-        creator: Faker::Number.between(1, 10),
-        comment_id: Faker::Number.between(1, 75),
-        created_on: Faker::Date.between(14.days.ago, Date.today),
+        creator: Faker::Number.between(from: 1, to: 10),
+        comment_id: Faker::Number.between(from: 1, to: 75),
+        created: Faker::Date.between(from: 14.days.ago, to: Date.today)
         )
      end
 
      75.times do
         comment = Comment.create(
         text: Faker::ChuckNorris.fact,
-        created: Faker::Date.between(14.days.ago, Date.today),
-        creator: Faker::Number.between(1, 10),
+        created: Faker::Date.between(from: 14.days.ago, to: Date.today),
+        user_id: Faker::Number.between(from: 1, to: 10)
         )
      end
 
-     4 times do
+     4.times do
         team = Team.create(
-        lead: Faker::Number.between(1, 10),
-        department: Faker::Number.between(1, 4),
+        lead: Faker::Number.between(from: 1, to: 10),
+        department: Faker::Number.between(from: 1, to: 4)
         )
      end
 
      50.times do
-        UsersTickets.create(
-        ticket_id: Faker::Number.between(1, 30),
-        user_id: Faker::Number.between(1, 10),
+        UsersTicket.create(
+        ticket_id: Faker::Number.between(from: 1, to: 30),
+        user_id: Faker::Number.between(from: 1, to: 10)
         )
      end
 
