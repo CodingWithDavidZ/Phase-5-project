@@ -1,5 +1,5 @@
 class UsersTicketsController < ApplicationController
-  before_action :set_users_ticket, only: [:show, :update, :destroy]
+  before_action :set_users_ticket, only: %i[show update destroy]
 
   # GET /users_tickets
   def index
@@ -39,13 +39,14 @@ class UsersTicketsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_users_ticket
-      @users_ticket = UsersTicket.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def users_ticket_params
-      params.require(:users_ticket).permit(:ticket_id, :user_id)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_users_ticket
+    @users_ticket = UsersTicket.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def users_ticket_params
+    params.require(:users_ticket).permit(:ticket_id, :user_id)
+  end
 end

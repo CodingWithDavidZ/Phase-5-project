@@ -1,0 +1,634 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 14.1
+-- Dumped by pg_dump version 14.0
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- Name: ar_internal_metadata; Type: TABLE; Schema: public; Owner: davidzombar
+--
+
+CREATE TABLE public.ar_internal_metadata (
+    key character varying NOT NULL,
+    value character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+ALTER TABLE public.ar_internal_metadata OWNER TO davidzombar;
+
+--
+-- Name: comments; Type: TABLE; Schema: public; Owner: davidzombar
+--
+
+CREATE TABLE public.comments (
+    id bigint NOT NULL,
+    text text,
+    created timestamp without time zone,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL,
+    user_id integer,
+    ticket_id integer
+);
+
+
+ALTER TABLE public.comments OWNER TO davidzombar;
+
+--
+-- Name: comments_id_seq; Type: SEQUENCE; Schema: public; Owner: davidzombar
+--
+
+CREATE SEQUENCE public.comments_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.comments_id_seq OWNER TO davidzombar;
+
+--
+-- Name: comments_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: davidzombar
+--
+
+ALTER SEQUENCE public.comments_id_seq OWNED BY public.comments.id;
+
+
+--
+-- Name: schema_migrations; Type: TABLE; Schema: public; Owner: davidzombar
+--
+
+CREATE TABLE public.schema_migrations (
+    version character varying NOT NULL
+);
+
+
+ALTER TABLE public.schema_migrations OWNER TO davidzombar;
+
+--
+-- Name: teams; Type: TABLE; Schema: public; Owner: davidzombar
+--
+
+CREATE TABLE public.teams (
+    id bigint NOT NULL,
+    lead integer,
+    department integer,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+ALTER TABLE public.teams OWNER TO davidzombar;
+
+--
+-- Name: teams_id_seq; Type: SEQUENCE; Schema: public; Owner: davidzombar
+--
+
+CREATE SEQUENCE public.teams_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.teams_id_seq OWNER TO davidzombar;
+
+--
+-- Name: teams_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: davidzombar
+--
+
+ALTER SEQUENCE public.teams_id_seq OWNED BY public.teams.id;
+
+
+--
+-- Name: tickets; Type: TABLE; Schema: public; Owner: davidzombar
+--
+
+CREATE TABLE public.tickets (
+    id bigint NOT NULL,
+    name character varying,
+    department integer,
+    priority integer,
+    issue_description text,
+    submitted_by integer,
+    image_url character varying,
+    start timestamp without time zone,
+    close timestamp without time zone,
+    creator integer,
+    created timestamp without time zone,
+    modified timestamp without time zone,
+    modified_by integer,
+    comment_id integer,
+    approved boolean,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL,
+    category integer
+);
+
+
+ALTER TABLE public.tickets OWNER TO davidzombar;
+
+--
+-- Name: tickets_id_seq; Type: SEQUENCE; Schema: public; Owner: davidzombar
+--
+
+CREATE SEQUENCE public.tickets_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.tickets_id_seq OWNER TO davidzombar;
+
+--
+-- Name: tickets_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: davidzombar
+--
+
+ALTER SEQUENCE public.tickets_id_seq OWNED BY public.tickets.id;
+
+
+--
+-- Name: users; Type: TABLE; Schema: public; Owner: davidzombar
+--
+
+CREATE TABLE public.users (
+    id bigint NOT NULL,
+    username character varying,
+    first_name character varying,
+    last_name character varying,
+    email character varying,
+    phone integer,
+    role_id integer,
+    password_digest character varying,
+    avatar_url character varying,
+    team_id integer,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+ALTER TABLE public.users OWNER TO davidzombar;
+
+--
+-- Name: users_id_seq; Type: SEQUENCE; Schema: public; Owner: davidzombar
+--
+
+CREATE SEQUENCE public.users_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.users_id_seq OWNER TO davidzombar;
+
+--
+-- Name: users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: davidzombar
+--
+
+ALTER SEQUENCE public.users_id_seq OWNED BY public.users.id;
+
+
+--
+-- Name: users_tickets; Type: TABLE; Schema: public; Owner: davidzombar
+--
+
+CREATE TABLE public.users_tickets (
+    id bigint NOT NULL,
+    ticket_id integer,
+    user_id integer,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+ALTER TABLE public.users_tickets OWNER TO davidzombar;
+
+--
+-- Name: users_tickets_id_seq; Type: SEQUENCE; Schema: public; Owner: davidzombar
+--
+
+CREATE SEQUENCE public.users_tickets_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.users_tickets_id_seq OWNER TO davidzombar;
+
+--
+-- Name: users_tickets_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: davidzombar
+--
+
+ALTER SEQUENCE public.users_tickets_id_seq OWNED BY public.users_tickets.id;
+
+
+--
+-- Name: comments id; Type: DEFAULT; Schema: public; Owner: davidzombar
+--
+
+ALTER TABLE ONLY public.comments ALTER COLUMN id SET DEFAULT nextval('public.comments_id_seq'::regclass);
+
+
+--
+-- Name: teams id; Type: DEFAULT; Schema: public; Owner: davidzombar
+--
+
+ALTER TABLE ONLY public.teams ALTER COLUMN id SET DEFAULT nextval('public.teams_id_seq'::regclass);
+
+
+--
+-- Name: tickets id; Type: DEFAULT; Schema: public; Owner: davidzombar
+--
+
+ALTER TABLE ONLY public.tickets ALTER COLUMN id SET DEFAULT nextval('public.tickets_id_seq'::regclass);
+
+
+--
+-- Name: users id; Type: DEFAULT; Schema: public; Owner: davidzombar
+--
+
+ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_id_seq'::regclass);
+
+
+--
+-- Name: users_tickets id; Type: DEFAULT; Schema: public; Owner: davidzombar
+--
+
+ALTER TABLE ONLY public.users_tickets ALTER COLUMN id SET DEFAULT nextval('public.users_tickets_id_seq'::regclass);
+
+
+--
+-- Data for Name: ar_internal_metadata; Type: TABLE DATA; Schema: public; Owner: davidzombar
+--
+
+COPY public.ar_internal_metadata (key, value, created_at, updated_at) FROM stdin;
+environment	development	2021-11-17 23:32:09.0607	2021-11-17 23:32:09.0607
+schema_sha1	9b0ee80a13a9ed993f5a5f83657a9500e3906585	2021-11-17 23:32:09.06529	2021-11-17 23:32:09.06529
+\.
+
+
+--
+-- Data for Name: comments; Type: TABLE DATA; Schema: public; Owner: davidzombar
+--
+
+COPY public.comments (id, text, created, created_at, updated_at, user_id, ticket_id) FROM stdin;
+1	The only pattern Chuck Norris knows is God Object.	2021-11-11 00:00:00	2021-11-17 23:32:12.284533	2021-11-17 23:32:12.284533	6	28
+2	Chuck Norris can recite π. Backwards.	2021-11-14 00:00:00	2021-11-17 23:32:12.2918	2021-11-17 23:32:12.2918	4	2
+3	Chuck Norris can write infinite recursion functions... and have them return.	2021-11-16 00:00:00	2021-11-17 23:32:12.298409	2021-11-17 23:32:12.298409	9	36
+4	Chuck Norris doesn't need the cloud to scale his applications, he uses his laptop.	2021-11-15 00:00:00	2021-11-17 23:32:12.305171	2021-11-17 23:32:12.305171	5	50
+5	Chuck Norris' keyboard doesn't have a F1 key, the computer asks him for help.	2021-11-10 00:00:00	2021-11-17 23:32:12.312024	2021-11-17 23:32:12.312024	9	8
+6	Chuck Norris can instantiate an abstract class.	2021-11-09 00:00:00	2021-11-17 23:32:12.319036	2021-11-17 23:32:12.319036	3	39
+7	All arrays Chuck Norris declares are of infinite size, because Chuck Norris knows no bounds.	2021-11-07 00:00:00	2021-11-17 23:32:12.326367	2021-11-17 23:32:12.326367	1	40
+8	Chuck Norris does not use exceptions when programming. He has not been able to identify any of his code that is not exceptional.	2021-11-11 00:00:00	2021-11-17 23:32:12.333645	2021-11-17 23:32:12.333645	4	25
+9	Chuck Norris doesn't need to know about class factory pattern. He can instantiate interfaces.	2021-11-14 00:00:00	2021-11-17 23:32:12.341165	2021-11-17 23:32:12.341165	6	34
+10	Chuck Norris doesn't get compiler errors, the language changes itself to accommodate Chuck Norris.	2021-11-08 00:00:00	2021-11-17 23:32:12.34851	2021-11-17 23:32:12.34851	5	35
+11	Chuck Norris went out of an infinite loop.	2021-11-03 00:00:00	2021-11-17 23:32:12.35566	2021-11-17 23:32:12.35566	10	41
+12	Chuck Norris can unit test an entire application with a single assert.	2021-11-04 00:00:00	2021-11-17 23:32:12.362855	2021-11-17 23:32:12.362855	7	46
+13	Chuck Norris's beard can type 140 wpm.	2021-11-12 00:00:00	2021-11-17 23:32:12.370018	2021-11-17 23:32:12.370018	2	29
+14	Chuck Norris never gets a syntax error. Instead, the language gets a DoesNotConformToChuck error.	2021-11-17 00:00:00	2021-11-17 23:32:12.37719	2021-11-17 23:32:12.37719	4	19
+15	Chuck Norris doesn't get compiler errors, the language changes itself to accommodate Chuck Norris.	2021-11-15 00:00:00	2021-11-17 23:32:12.384346	2021-11-17 23:32:12.384346	2	29
+16	When Chuck Norris' code fails to compile the compiler apologises.	2021-11-11 00:00:00	2021-11-17 23:32:12.391579	2021-11-17 23:32:12.391579	6	1
+17	Chuck Norris doesn't delete files, he blows them away.	2021-11-04 00:00:00	2021-11-17 23:32:12.398705	2021-11-17 23:32:12.398705	8	31
+18	Chuck Norris can unit test an entire application with a single assert.	2021-11-12 00:00:00	2021-11-17 23:32:12.405918	2021-11-17 23:32:12.405918	6	31
+19	Chuck Norris never gets a syntax error. Instead, the language gets a DoesNotConformToChuck error.	2021-11-14 00:00:00	2021-11-17 23:32:12.413054	2021-11-17 23:32:12.413054	1	35
+20	Chuck Norris does not use revision control software. None of his code has ever needed revision.	2021-11-15 00:00:00	2021-11-17 23:32:12.42004	2021-11-17 23:32:12.42004	2	45
+21	When Chuck Norris gives a method an argument, the method loses.	2021-11-10 00:00:00	2021-11-17 23:32:12.427234	2021-11-17 23:32:12.427234	9	37
+22	There is no Esc key on Chuck Norris' keyboard, because no one escapes Chuck Norris.	2021-11-08 00:00:00	2021-11-17 23:32:12.434801	2021-11-17 23:32:12.434801	1	33
+23	No statement can catch the ChuckNorrisException.	2021-11-17 00:00:00	2021-11-17 23:32:12.443443	2021-11-17 23:32:12.443443	7	1
+24	Chuck Norris hosting is 101% uptime guaranteed.	2021-11-04 00:00:00	2021-11-17 23:32:12.450592	2021-11-17 23:32:12.450592	1	2
+25	Chuck Norris can write infinite recursion functions... and have them return.	2021-11-06 00:00:00	2021-11-17 23:32:12.457821	2021-11-17 23:32:12.457821	9	37
+26	Chuck Norris' addition operator doesn't commute; it teleports to where he needs it to be.	2021-11-17 00:00:00	2021-11-17 23:32:12.465014	2021-11-17 23:32:12.465014	4	5
+27	Chuck Norris can binary search unsorted data.	2021-11-12 00:00:00	2021-11-17 23:32:12.472417	2021-11-17 23:32:12.472417	1	46
+28	Chuck Norris doesn't need to know about class factory pattern. He can instantiate interfaces.	2021-11-16 00:00:00	2021-11-17 23:32:12.479499	2021-11-17 23:32:12.479499	6	25
+29	Chuck Norris can divide by zero.	2021-11-08 00:00:00	2021-11-17 23:32:12.488716	2021-11-17 23:32:12.488716	6	20
+30	There is no need to try catching Chuck Norris' exceptions for recovery; every single throw he does is fatal.	2021-11-08 00:00:00	2021-11-17 23:32:12.496085	2021-11-17 23:32:12.496085	2	18
+31	Chuck Norris knows the last digit of PI.	2021-11-11 00:00:00	2021-11-17 23:32:12.503391	2021-11-17 23:32:12.503391	5	27
+32	Project managers never ask Chuck Norris for estimations... ever.	2021-11-03 00:00:00	2021-11-17 23:32:12.511133	2021-11-17 23:32:12.511133	8	5
+33	Chuck Norris' preferred IDE is hexedit.	2021-11-10 00:00:00	2021-11-17 23:32:12.518039	2021-11-17 23:32:12.518039	1	15
+34	Chuck Norris can instantiate an abstract class.	2021-11-06 00:00:00	2021-11-17 23:32:12.525251	2021-11-17 23:32:12.525251	1	3
+35	No statement can catch the ChuckNorrisException.	2021-11-15 00:00:00	2021-11-17 23:32:12.532954	2021-11-17 23:32:12.532954	5	24
+36	Chuck Norris knows the last digit of PI.	2021-11-13 00:00:00	2021-11-17 23:32:12.540709	2021-11-17 23:32:12.540709	1	33
+37	Chuck Norris doesn't believe in floating point numbers because they can't be typed on his binary keyboard.	2021-11-04 00:00:00	2021-11-17 23:32:12.548539	2021-11-17 23:32:12.548539	3	22
+38	Chuck Norris' keyboard doesn't have a F1 key, the computer asks him for help.	2021-11-05 00:00:00	2021-11-17 23:32:12.556018	2021-11-17 23:32:12.556018	2	27
+39	Chuck Norris compresses his files by doing a flying round house kick to the hard drive.	2021-11-09 00:00:00	2021-11-17 23:32:12.563633	2021-11-17 23:32:12.563633	9	40
+40	Chuck Norris breaks RSA 128-bit encrypted codes in milliseconds.	2021-11-15 00:00:00	2021-11-17 23:32:12.570903	2021-11-17 23:32:12.570903	9	30
+41	Chuck Norris does not use revision control software. None of his code has ever needed revision.	2021-11-09 00:00:00	2021-11-17 23:32:12.578324	2021-11-17 23:32:12.578324	5	28
+42	Chuck Norris breaks RSA 128-bit encrypted codes in milliseconds.	2021-11-07 00:00:00	2021-11-17 23:32:12.586109	2021-11-17 23:32:12.586109	4	41
+43	Chuck Norris does not use exceptions when programming. He has not been able to identify any of his code that is not exceptional.	2021-11-15 00:00:00	2021-11-17 23:32:12.593832	2021-11-17 23:32:12.593832	6	15
+44	When Chuck Norris presses Ctrl+Alt+Delete, worldwide computer restart is initiated.	2021-11-04 00:00:00	2021-11-17 23:32:12.601093	2021-11-17 23:32:12.601093	3	39
+45	Chuck Norris's keyboard doesn't have a Ctrl key because nothing controls Chuck Norris.	2021-11-14 00:00:00	2021-11-17 23:32:12.608778	2021-11-17 23:32:12.608778	8	26
+46	Chuck Norris can write infinite recursion functions... and have them return.	2021-11-05 00:00:00	2021-11-17 23:32:12.616612	2021-11-17 23:32:12.616612	1	46
+47	Chuck Norris is immutable. If something's going to change, it's going to have to be the rest of the universe.	2021-11-08 00:00:00	2021-11-17 23:32:12.624508	2021-11-17 23:32:12.624508	5	28
+48	Chuck Norris can write multi-threaded applications with a single thread.	2021-11-15 00:00:00	2021-11-17 23:32:12.632382	2021-11-17 23:32:12.632382	2	17
+49	Chuck Norris' beard is immutable.	2021-11-11 00:00:00	2021-11-17 23:32:12.640048	2021-11-17 23:32:12.640048	1	15
+50	Chuck Norris's keyboard doesn't have a Ctrl key because nothing controls Chuck Norris.	2021-11-11 00:00:00	2021-11-17 23:32:12.648076	2021-11-17 23:32:12.648076	6	47
+51	Chuck Norris has root access to your system.	2021-11-03 00:00:00	2021-11-17 23:32:12.655719	2021-11-17 23:32:12.655719	4	12
+52	There is nothing regular about Chuck Norris' expressions.	2021-11-07 00:00:00	2021-11-17 23:32:12.663525	2021-11-17 23:32:12.663525	4	39
+53	When a bug sees Chuck Norris, it flees screaming in terror, and then immediately self-destructs to avoid being roundhouse-kicked.	2021-11-03 00:00:00	2021-11-17 23:32:12.671295	2021-11-17 23:32:12.671295	3	41
+54	When Chuck Norris points to null, null quakes in fear.	2021-11-15 00:00:00	2021-11-17 23:32:12.679011	2021-11-17 23:32:12.679011	1	46
+55	When Chuck Norris gives a method an argument, the method loses.	2021-11-15 00:00:00	2021-11-17 23:32:12.68674	2021-11-17 23:32:12.68674	2	49
+56	Chuck Norris doesn't have disk latency because the hard drive knows to hurry the hell up.	2021-11-12 00:00:00	2021-11-17 23:32:12.694348	2021-11-17 23:32:12.694348	9	42
+57	Chuck Norris doesn't have performance bottlenecks. He just makes the universe wait its turn.	2021-11-07 00:00:00	2021-11-17 23:32:12.703491	2021-11-17 23:32:12.703491	6	15
+58	Chuck Norris doesn't use web standards as the web will conform to him.	2021-11-16 00:00:00	2021-11-17 23:32:12.711682	2021-11-17 23:32:12.711682	1	31
+59	Chuck Norris burst the dot com bubble.	2021-11-17 00:00:00	2021-11-17 23:32:12.719547	2021-11-17 23:32:12.719547	7	32
+60	Chuck Norris doesn't use web standards as the web will conform to him.	2021-11-16 00:00:00	2021-11-17 23:32:12.727138	2021-11-17 23:32:12.727138	3	2
+61	Chuck Norris' addition operator doesn't commute; it teleports to where he needs it to be.	2021-11-03 00:00:00	2021-11-17 23:32:12.73422	2021-11-17 23:32:12.73422	7	2
+62	Chuck Norris does not use exceptions when programming. He has not been able to identify any of his code that is not exceptional.	2021-11-06 00:00:00	2021-11-17 23:32:12.741407	2021-11-17 23:32:12.741407	10	17
+63	All arrays Chuck Norris declares are of infinite size, because Chuck Norris knows no bounds.	2021-11-14 00:00:00	2021-11-17 23:32:12.749467	2021-11-17 23:32:12.749467	5	21
+64	When Chuck Norris presses Ctrl+Alt+Delete, worldwide computer restart is initiated.	2021-11-04 00:00:00	2021-11-17 23:32:12.7572	2021-11-17 23:32:12.7572	3	5
+65	Chuck Norris went out of an infinite loop.	2021-11-12 00:00:00	2021-11-17 23:32:12.764886	2021-11-17 23:32:12.764886	3	17
+66	There is no Esc key on Chuck Norris' keyboard, because no one escapes Chuck Norris.	2021-11-15 00:00:00	2021-11-17 23:32:12.772653	2021-11-17 23:32:12.772653	10	4
+67	Chuck Norris' preferred IDE is hexedit.	2021-11-04 00:00:00	2021-11-17 23:32:12.780336	2021-11-17 23:32:12.780336	3	32
+68	The programs that Chuck Norris writes don't have version numbers because he only writes them once. If a user reports a bug or has a feature request they don't live to see the sun set.	2021-11-06 00:00:00	2021-11-17 23:32:12.788536	2021-11-17 23:32:12.788536	4	18
+69	Chuck Norris doesn't delete files, he blows them away.	2021-11-04 00:00:00	2021-11-17 23:32:12.796138	2021-11-17 23:32:12.796138	1	1
+70	Chuck Norris burst the dot com bubble.	2021-11-07 00:00:00	2021-11-17 23:32:12.805555	2021-11-17 23:32:12.805555	9	47
+71	Chuck Norris's keyboard doesn't have a Ctrl key because nothing controls Chuck Norris.	2021-11-09 00:00:00	2021-11-17 23:32:12.812739	2021-11-17 23:32:12.812739	4	46
+72	Chuck Norris can spawn threads that complete before they are started.	2021-11-13 00:00:00	2021-11-17 23:32:12.820449	2021-11-17 23:32:12.820449	4	17
+73	Chuck Norris can write infinite recursion functions... and have them return.	2021-11-15 00:00:00	2021-11-17 23:32:12.829001	2021-11-17 23:32:12.829001	8	12
+74	There is no Esc key on Chuck Norris' keyboard, because no one escapes Chuck Norris.	2021-11-04 00:00:00	2021-11-17 23:32:12.839498	2021-11-17 23:32:12.839498	7	8
+75	Anonymous methods and anonymous types are really all called Chuck Norris. They just don't like to boast.	2021-11-12 00:00:00	2021-11-17 23:32:12.848176	2021-11-17 23:32:12.848176	1	24
+\.
+
+
+--
+-- Data for Name: schema_migrations; Type: TABLE DATA; Schema: public; Owner: davidzombar
+--
+
+COPY public.schema_migrations (version) FROM stdin;
+20211116144808
+20211112193403
+20211112193420
+20211112193530
+20211112193553
+20211112193610
+20211116134254
+20211116144552
+\.
+
+
+--
+-- Data for Name: teams; Type: TABLE DATA; Schema: public; Owner: davidzombar
+--
+
+COPY public.teams (id, lead, department, created_at, updated_at) FROM stdin;
+1	4	4	2021-11-17 23:32:09.159134	2021-11-17 23:32:09.159134
+2	1	4	2021-11-17 23:32:09.162414	2021-11-17 23:32:09.162414
+3	7	2	2021-11-17 23:32:09.164723	2021-11-17 23:32:09.164723
+4	7	1	2021-11-17 23:32:09.166956	2021-11-17 23:32:09.166956
+\.
+
+
+--
+-- Data for Name: tickets; Type: TABLE DATA; Schema: public; Owner: davidzombar
+--
+
+COPY public.tickets (id, name, department, priority, issue_description, submitted_by, image_url, start, close, creator, created, modified, modified_by, comment_id, approved, created_at, updated_at, category) FROM stdin;
+1	Hella meggings seitan kickstarter pop-up scenester letterpress.	2	1	Nesciunt maxime a. Aut molestiae est. Nulla reprehenderit aut.	6	https://www.fillmurray.com/200/200	\N	\N	9	2021-11-10 00:00:00	\N	\N	\N	\N	2021-11-17 23:32:12.079615	2021-11-17 23:32:12.079615	3
+2	Wolf kickstarter fanny pack.	1	1	Eos explicabo accusantium. Consequatur sit earum. Et voluptatem voluptatem.	6	https://www.fillmurray.com/200/200	\N	\N	1	2021-11-03 00:00:00	\N	\N	\N	\N	2021-11-17 23:32:12.087229	2021-11-17 23:32:12.087229	2
+3	Tattooed small batch kale chips mlkshk gluten-free yuccie.	2	1	Nisi necessitatibus debitis. In quis voluptatem. Fugiat rerum illo.	5	https://www.fillmurray.com/200/200	\N	\N	3	2021-11-04 00:00:00	\N	\N	\N	\N	2021-11-17 23:32:12.09084	2021-11-17 23:32:12.09084	3
+4	Kickstarter +1 mlkshk sartorial vegan scenester occupy celiac.	2	2	Distinctio suscipit et. Nulla voluptatem rerum. Laboriosam autem maxime.	10	https://www.fillmurray.com/200/200	\N	\N	6	2021-11-17 00:00:00	\N	\N	\N	\N	2021-11-17 23:32:12.093954	2021-11-17 23:32:12.093954	3
+5	Blue bottle try-hard semiotics park meggings you probably haven't heard of them five dollar toast lomo.	4	3	Ut quisquam atque. Quod alias placeat. Et et ipsum.	4	https://www.fillmurray.com/200/200	\N	\N	10	2021-11-14 00:00:00	\N	\N	\N	\N	2021-11-17 23:32:12.097003	2021-11-17 23:32:12.097003	3
+6	Thundercats master vhs 8-bit.	4	3	Porro voluptas voluptates. Aut rerum vel. Accusamus ut sequi.	10	https://www.fillmurray.com/200/200	\N	\N	4	2021-11-09 00:00:00	\N	\N	\N	\N	2021-11-17 23:32:12.100367	2021-11-17 23:32:12.100367	2
+7	Chillwave pork belly put a bird on it polaroid pinterest.	4	2	Et eos aut. Qui aut deleniti. Reiciendis repellat illo.	9	https://www.fillmurray.com/200/200	\N	\N	6	2021-11-17 00:00:00	\N	\N	\N	\N	2021-11-17 23:32:12.103831	2021-11-17 23:32:12.103831	2
+8	Migas yr tofu.	1	2	At veniam magni. Tempora et ipsa. Impedit est in.	2	https://www.fillmurray.com/200/200	\N	\N	3	2021-11-11 00:00:00	\N	\N	\N	\N	2021-11-17 23:32:12.107302	2021-11-17 23:32:12.107302	2
+9	Intelligentsia listicle selvage.	3	3	Sint ipsum ullam. Sunt laboriosam consequuntur. Enim quos est.	4	https://www.fillmurray.com/200/200	\N	\N	9	2021-11-09 00:00:00	\N	\N	\N	\N	2021-11-17 23:32:12.110692	2021-11-17 23:32:12.110692	5
+10	Portland hoodie plaid meggings.	4	1	Exercitationem ut ullam. Sed quia non. Provident cumque sit.	10	https://www.fillmurray.com/200/200	\N	\N	9	2021-11-15 00:00:00	\N	\N	\N	\N	2021-11-17 23:32:12.1142	2021-11-17 23:32:12.1142	2
+11	Irony mustache xoxo.	2	1	Et officiis vitae. Incidunt rem voluptas. Laboriosam magnam similique.	10	https://www.fillmurray.com/200/200	\N	\N	10	2021-11-09 00:00:00	\N	\N	\N	\N	2021-11-17 23:32:12.117707	2021-11-17 23:32:12.117707	5
+12	Yr trust fund vice food truck.	2	1	Sint deleniti vel. Soluta inventore dolor. Vel id est.	5	https://www.fillmurray.com/200/200	\N	\N	6	2021-11-10 00:00:00	\N	\N	\N	\N	2021-11-17 23:32:12.121199	2021-11-17 23:32:12.121199	2
+13	Green juice semiotics hashtag listicle.	3	2	Quia saepe laborum. Aspernatur nesciunt aut. Labore earum dolorem.	5	https://www.fillmurray.com/200/200	\N	\N	2	2021-11-10 00:00:00	\N	\N	\N	\N	2021-11-17 23:32:12.131587	2021-11-17 23:32:12.131587	5
+14	Knausgaard 3 wolf moon cornhole.	1	1	Rerum dolor repellat. Rem vel voluptate. Et doloremque est.	10	https://www.fillmurray.com/200/200	\N	\N	10	2021-11-13 00:00:00	\N	\N	\N	\N	2021-11-17 23:32:12.135198	2021-11-17 23:32:12.135198	5
+15	Swag irony umami five dollar toast.	1	1	Enim sint nihil. Aut quod aut. Error quod rerum.	9	https://www.fillmurray.com/200/200	\N	\N	4	2021-11-16 00:00:00	\N	\N	\N	\N	2021-11-17 23:32:12.138726	2021-11-17 23:32:12.138726	3
+16	Heirloom trust fund +1 neutra marfa freegan.	3	2	Placeat harum ea. Impedit eum non. Fugiat et enim.	7	https://www.fillmurray.com/200/200	\N	\N	8	2021-11-08 00:00:00	\N	\N	\N	\N	2021-11-17 23:32:12.141901	2021-11-17 23:32:12.141901	3
+17	Heirloom intelligentsia muggle magic shabby chic.	4	2	Ut maxime eligendi. Voluptatem aut impedit. Earum molestiae ullam.	2	https://www.fillmurray.com/200/200	\N	\N	5	2021-11-15 00:00:00	\N	\N	\N	\N	2021-11-17 23:32:12.145133	2021-11-17 23:32:12.145133	4
+18	Twee sustainable food truck tousled.	4	1	Aut illo soluta. Reiciendis quod laborum. Ut numquam modi.	1	https://www.fillmurray.com/200/200	\N	\N	6	2021-11-16 00:00:00	\N	\N	\N	\N	2021-11-17 23:32:12.14855	2021-11-17 23:32:12.14855	1
+19	Microdosing wes anderson crucifix meditation kickstarter.	2	1	Debitis quae et. Deserunt a sed. Ratione rerum nihil.	1	https://www.fillmurray.com/200/200	\N	\N	4	2021-11-07 00:00:00	\N	\N	\N	\N	2021-11-17 23:32:12.151779	2021-11-17 23:32:12.151779	1
+20	Sriracha williamsburg selvage vinegar irony park small batch.	2	1	Doloribus voluptates iure. Quod asperiores consectetur. Adipisci impedit voluptatibus.	3	https://www.fillmurray.com/200/200	\N	\N	2	2021-11-16 00:00:00	\N	\N	\N	\N	2021-11-17 23:32:12.155028	2021-11-17 23:32:12.155028	2
+21	Portland fixie shabby chic direct trade godard.	3	3	Voluptas ratione sit. Sunt eveniet excepturi. Modi iusto at.	5	https://www.fillmurray.com/200/200	\N	\N	8	2021-11-05 00:00:00	\N	\N	\N	\N	2021-11-17 23:32:12.158402	2021-11-17 23:32:12.158402	5
+22	Salvia cronut drinking forage thundercats selfies.	2	3	Sint sunt recusandae. Qui qui doloremque. Iusto eos ducimus.	6	https://www.fillmurray.com/200/200	\N	\N	5	2021-11-16 00:00:00	\N	\N	\N	\N	2021-11-17 23:32:12.161646	2021-11-17 23:32:12.161646	4
+23	Cray selvage echo sriracha salvia tofu drinking.	2	1	Consequuntur provident et. Dolor et quia. Suscipit et qui.	7	https://www.fillmurray.com/200/200	\N	\N	3	2021-11-10 00:00:00	\N	\N	\N	\N	2021-11-17 23:32:12.165462	2021-11-17 23:32:12.165462	4
+24	Bitters ramps freegan readymade.	1	1	At omnis molestias. Recusandae aut facilis. Rerum totam fuga.	7	https://www.fillmurray.com/200/200	\N	\N	3	2021-11-05 00:00:00	\N	\N	\N	\N	2021-11-17 23:32:12.168967	2021-11-17 23:32:12.168967	1
+25	Meggings cornhole photo booth.	1	3	Unde qui sint. Aut saepe officiis. Ut blanditiis soluta.	9	https://www.fillmurray.com/200/200	\N	\N	6	2021-11-06 00:00:00	\N	\N	\N	\N	2021-11-17 23:32:12.172438	2021-11-17 23:32:12.172438	5
+26	Artisan 3 wolf moon wayfarers flannel tilde plaid.	4	1	Non rerum ratione. Aut assumenda quas. Libero maxime est.	5	https://www.fillmurray.com/200/200	\N	\N	4	2021-11-16 00:00:00	\N	\N	\N	\N	2021-11-17 23:32:12.176142	2021-11-17 23:32:12.176142	2
+27	Church-key ugh tattooed hella.	2	1	Eum consequuntur odio. Quod nihil odit. Fugit maiores beatae.	5	https://www.fillmurray.com/200/200	\N	\N	1	2021-11-09 00:00:00	\N	\N	\N	\N	2021-11-17 23:32:12.179721	2021-11-17 23:32:12.179721	5
+28	Food truck selvage disrupt forage pabst franzen.	3	1	Voluptatem modi ad. Minus vero id. Laudantium natus consequatur.	5	https://www.fillmurray.com/200/200	\N	\N	1	2021-11-03 00:00:00	\N	\N	\N	\N	2021-11-17 23:32:12.183094	2021-11-17 23:32:12.183094	2
+29	Trust fund you probably haven't heard of them fingerstache seitan cronut aesthetic tumblr cleanse.	4	2	Est velit dolores. Quia blanditiis iste. Odit ipsum ex.	5	https://www.fillmurray.com/200/200	\N	\N	5	2021-11-06 00:00:00	\N	\N	\N	\N	2021-11-17 23:32:12.186644	2021-11-17 23:32:12.186644	2
+30	Pinterest franzen schlitz muggle magic distillery butcher retro.	2	1	Expedita illum officiis. Facere eum natus. Voluptas quae est.	2	https://www.fillmurray.com/200/200	\N	\N	6	2021-11-12 00:00:00	\N	\N	\N	\N	2021-11-17 23:32:12.190006	2021-11-17 23:32:12.190006	2
+31	Fixie sustainable organic fingerstache.	4	3	Quasi et eos. A repellendus iure. Et iste qui.	5	https://www.fillmurray.com/200/200	\N	\N	1	2021-11-08 00:00:00	\N	\N	\N	\N	2021-11-17 23:32:12.193285	2021-11-17 23:32:12.193285	3
+32	Williamsburg 90's literally street 3 wolf moon hella brooklyn schlitz.	3	1	Et eligendi est. Dignissimos possimus officia. Et blanditiis quasi.	4	https://www.fillmurray.com/200/200	\N	\N	8	2021-11-12 00:00:00	\N	\N	\N	\N	2021-11-17 23:32:12.196625	2021-11-17 23:32:12.196625	1
+33	Kinfolk banjo slow-carb flexitarian.	1	3	At laudantium explicabo. Doloremque quia et. Laboriosam dolorum nemo.	3	https://www.fillmurray.com/200/200	\N	\N	6	2021-11-14 00:00:00	\N	\N	\N	\N	2021-11-17 23:32:12.200008	2021-11-17 23:32:12.200008	1
+34	Salvia iphone fingerstache cornhole paleo blue bottle.	2	1	Nostrum exercitationem voluptas. Similique assumenda magnam. Est sit est.	2	https://www.fillmurray.com/200/200	\N	\N	2	2021-11-10 00:00:00	\N	\N	\N	\N	2021-11-17 23:32:12.203517	2021-11-17 23:32:12.203517	3
+35	Sartorial try-hard lumbersexual leggings.	2	1	Ipsa laborum assumenda. Incidunt et sequi. Blanditiis modi non.	2	https://www.fillmurray.com/200/200	\N	\N	10	2021-11-08 00:00:00	\N	\N	\N	\N	2021-11-17 23:32:12.207634	2021-11-17 23:32:12.207634	5
+36	Mustache vice tacos quinoa.	4	1	Unde natus aut. Explicabo voluptatibus qui. Dolores dolorum ut.	5	https://www.fillmurray.com/200/200	\N	\N	1	2021-11-14 00:00:00	\N	\N	\N	\N	2021-11-17 23:32:12.210987	2021-11-17 23:32:12.210987	3
+37	Pour-over vinegar vice readymade.	2	2	Alias est esse. Cum eius voluptas. Porro consequuntur expedita.	7	https://www.fillmurray.com/200/200	\N	\N	2	2021-11-06 00:00:00	\N	\N	\N	\N	2021-11-17 23:32:12.214363	2021-11-17 23:32:12.214363	5
+38	Bushwick crucifix five dollar toast.	1	1	Nihil soluta minima. Facere non facilis. Qui culpa laudantium.	1	https://www.fillmurray.com/200/200	\N	\N	6	2021-11-10 00:00:00	\N	\N	\N	\N	2021-11-17 23:32:12.217919	2021-11-17 23:32:12.217919	1
+39	Next level viral bushwick street pabst pitchfork listicle.	3	2	Et commodi et. Est sapiente enim. Rerum sunt molestiae.	7	https://www.fillmurray.com/200/200	\N	\N	9	2021-11-15 00:00:00	\N	\N	\N	\N	2021-11-17 23:32:12.22161	2021-11-17 23:32:12.22161	3
+40	Chia swag godard venmo shoreditch food truck.	4	3	Et ut nulla. Repudiandae ullam perferendis. Reprehenderit eos qui.	10	https://www.fillmurray.com/200/200	\N	\N	4	2021-11-16 00:00:00	\N	\N	\N	\N	2021-11-17 23:32:12.225135	2021-11-17 23:32:12.225135	4
+41	Put a bird on it kogi actually wayfarers waistcoat.	4	3	Quasi pariatur ea. Quia voluptate veritatis. Dolore ut fugit.	10	https://www.fillmurray.com/200/200	\N	\N	9	2021-11-16 00:00:00	\N	\N	\N	\N	2021-11-17 23:32:12.228503	2021-11-17 23:32:12.228503	4
+42	Paleo pbr&b tousled banh mi mlkshk literally.	1	1	Deserunt incidunt ipsa. Culpa asperiores debitis. Sed quod officia.	4	https://www.fillmurray.com/200/200	\N	\N	5	2021-11-09 00:00:00	\N	\N	\N	\N	2021-11-17 23:32:12.232108	2021-11-17 23:32:12.232108	2
+43	Slow-carb green juice williamsburg scenester.	4	3	Labore repudiandae laborum. Laborum esse nobis. Qui unde fugit.	4	https://www.fillmurray.com/200/200	\N	\N	9	2021-11-06 00:00:00	\N	\N	\N	\N	2021-11-17 23:32:12.235695	2021-11-17 23:32:12.235695	1
+44	Vinyl stumptown wes anderson tousled next level schlitz flexitarian.	1	2	Nostrum facilis ea. Dolorem autem doloribus. Et ut qui.	5	https://www.fillmurray.com/200/200	\N	\N	4	2021-11-04 00:00:00	\N	\N	\N	\N	2021-11-17 23:32:12.239183	2021-11-17 23:32:12.239183	4
+45	Cardigan mumblecore vice mustache put a bird on it sustainable lumbersexual you probably haven't heard of them.	1	3	Et quia tempora. Et reiciendis blanditiis. Alias nisi minima.	4	https://www.fillmurray.com/200/200	\N	\N	4	2021-11-09 00:00:00	\N	\N	\N	\N	2021-11-17 23:32:12.242978	2021-11-17 23:32:12.242978	3
+46	Cray literally tumblr mlkshk venmo typewriter retro.	1	3	Voluptas mollitia illo. Ratione harum non. Illum porro aut.	6	https://www.fillmurray.com/200/200	\N	\N	8	2021-11-03 00:00:00	\N	\N	\N	\N	2021-11-17 23:32:12.246591	2021-11-17 23:32:12.246591	5
+47	Vinyl marfa cleanse.	4	3	Delectus alias culpa. Reprehenderit facilis vel. Reprehenderit provident aperiam.	9	https://www.fillmurray.com/200/200	\N	\N	10	2021-11-13 00:00:00	\N	\N	\N	\N	2021-11-17 23:32:12.249971	2021-11-17 23:32:12.249971	3
+48	Disrupt letterpress skateboard yr.	1	2	Eaque vel ut. Repudiandae et quo. Nihil inventore incidunt.	2	https://www.fillmurray.com/200/200	\N	\N	8	2021-11-04 00:00:00	\N	\N	\N	\N	2021-11-17 23:32:12.25347	2021-11-17 23:32:12.25347	4
+49	Asymmetrical cray iphone.	2	1	Magni expedita possimus. Aut sed ullam. Perspiciatis cupiditate sit.	7	https://www.fillmurray.com/200/200	\N	\N	2	2021-11-16 00:00:00	\N	\N	\N	\N	2021-11-17 23:32:12.257007	2021-11-17 23:32:12.257007	2
+50	Jean shorts pork belly blue bottle actually fashion axe slow-carb letterpress taxidermy.	3	3	Ut non ullam. Adipisci quas modi. Animi est cum.	10	https://www.fillmurray.com/200/200	\N	\N	10	2021-11-08 00:00:00	\N	\N	\N	\N	2021-11-17 23:32:12.260581	2021-11-17 23:32:12.260581	2
+\.
+
+
+--
+-- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: davidzombar
+--
+
+COPY public.users (id, username, first_name, last_name, email, phone, role_id, password_digest, avatar_url, team_id, created_at, updated_at) FROM stdin;
+1	Kassulke	Cornell	McLaughlin	janina_terry@example.com	791	\N	$2a$12$tHX77a8UQWuB48jLTb2aO.5MwE/4Pus4Uw/3ULb.cJtSAbe6yHQ9C	https://robohash.org/etquasivoluptates.png?size=300x300&set=set1	4	2021-11-17 23:32:09.628118	2021-11-17 23:32:09.628118
+2	Berge	Armanda	Feest	delfina_carroll@example.net	0	\N	$2a$12$REnlzB/MOlpKx1jtXv9SO.SL195byZsobH5UCqh.4Jr3C8nCz6jgu	https://robohash.org/voluptatemquamanimi.png?size=300x300&set=set1	3	2021-11-17 23:32:09.896829	2021-11-17 23:32:09.896829
+3	Kuvalis	Brian	Leuschke	lucrecia_moore@example.com	100	\N	$2a$12$mCBoqYuYhJ7VHHSSr8/KbOh4mCPX0sv2KCXM2RKzzn0rPnh6ZbC5O	https://robohash.org/quisnumquamsed.png?size=300x300&set=set1	3	2021-11-17 23:32:10.162004	2021-11-17 23:32:10.162004
+4	Watsica	Tennie	Goyette	mohammad@example.com	627	\N	$2a$12$If77hGceNpEUoZ9KiW/yMesre0n5FOWjPFfSYfn6/RhOhXg2PFRnC	https://robohash.org/commodilaudantiuma.png?size=300x300&set=set1	3	2021-11-17 23:32:10.43833	2021-11-17 23:32:10.43833
+5	Dicki	Lester	Kreiger	trey@example.com	662	\N	$2a$12$81JgWfEyGXQf4HSSHfSvyO8wNHPzjlMJY9xQq5fAIBTY7h500dfS.	https://robohash.org/numquamquilibero.png?size=300x300&set=set1	4	2021-11-17 23:32:10.716243	2021-11-17 23:32:10.716243
+6	Bahringer	Jonathan	Welch	terra@example.com	994	\N	$2a$12$7ajhpj9sSk4j3DrAcA82ZuUsO0FkNTJW6HOwyUQ1pwNuyvNMNChE.	https://robohash.org/voluptatemvoluptassunt.png?size=300x300&set=set1	3	2021-11-17 23:32:10.992004	2021-11-17 23:32:10.992004
+7	Gislason	Somer	Herzog	katrina.hudson@example.net	0	\N	$2a$12$SpN8B7VVsdNArTrJFrYZDe8OluPH10tFZetGfCuFR2AyFMV6pnIj2	https://robohash.org/magnidoloret.png?size=300x300&set=set1	1	2021-11-17 23:32:11.257957	2021-11-17 23:32:11.257957
+8	Bartoletti	Florencia	Donnelly	lee.bashirian@example.net	450	\N	$2a$12$SvY8DHGu4jfVWG8P8rg88.cDlatM44mwJLpVAnWzygEDZcNXetIry	https://robohash.org/iustoipsamveritatis.png?size=300x300&set=set1	3	2021-11-17 23:32:11.524667	2021-11-17 23:32:11.524667
+9	Ondricka	Shin	Treutel	adam.willms@example.org	0	\N	$2a$12$U0muxKcHBa7zWC89zui3O.gYKHAEPbkRcA7aRwkLPquI6dli9rHaq	https://robohash.org/blanditiisautemdistinctio.png?size=300x300&set=set1	1	2021-11-17 23:32:11.790539	2021-11-17 23:32:11.790539
+10	Champlin	Ching	Schoen	royce@example.net	0	\N	$2a$12$Ve2RUmCZFH6SwBMfbNlfpOAJaw/AdGotX/yZffVqy6nWXeX9ysJGa	https://robohash.org/doloremreiciendisitaque.png?size=300x300&set=set1	2	2021-11-17 23:32:12.056179	2021-11-17 23:32:12.056179
+\.
+
+
+--
+-- Data for Name: users_tickets; Type: TABLE DATA; Schema: public; Owner: davidzombar
+--
+
+COPY public.users_tickets (id, ticket_id, user_id, created_at, updated_at) FROM stdin;
+1	12	4	2021-11-17 23:32:12.870268	2021-11-17 23:32:12.870268
+2	17	7	2021-11-17 23:32:12.877978	2021-11-17 23:32:12.877978
+3	47	2	2021-11-17 23:32:12.885141	2021-11-17 23:32:12.885141
+4	26	1	2021-11-17 23:32:12.892067	2021-11-17 23:32:12.892067
+5	20	9	2021-11-17 23:32:12.898722	2021-11-17 23:32:12.898722
+6	36	5	2021-11-17 23:32:12.906409	2021-11-17 23:32:12.906409
+7	13	7	2021-11-17 23:32:12.913928	2021-11-17 23:32:12.913928
+8	24	3	2021-11-17 23:32:12.921492	2021-11-17 23:32:12.921492
+9	13	4	2021-11-17 23:32:12.929047	2021-11-17 23:32:12.929047
+10	45	3	2021-11-17 23:32:12.938079	2021-11-17 23:32:12.938079
+11	37	9	2021-11-17 23:32:12.946512	2021-11-17 23:32:12.946512
+12	39	2	2021-11-17 23:32:12.953677	2021-11-17 23:32:12.953677
+13	10	1	2021-11-17 23:32:12.960853	2021-11-17 23:32:12.960853
+14	7	10	2021-11-17 23:32:12.96841	2021-11-17 23:32:12.96841
+15	19	1	2021-11-17 23:32:12.976049	2021-11-17 23:32:12.976049
+16	27	5	2021-11-17 23:32:12.985108	2021-11-17 23:32:12.985108
+17	18	4	2021-11-17 23:32:12.992643	2021-11-17 23:32:12.992643
+18	40	10	2021-11-17 23:32:12.999797	2021-11-17 23:32:12.999797
+19	9	10	2021-11-17 23:32:13.007888	2021-11-17 23:32:13.007888
+20	21	3	2021-11-17 23:32:13.015318	2021-11-17 23:32:13.015318
+21	35	8	2021-11-17 23:32:13.021831	2021-11-17 23:32:13.021831
+22	15	3	2021-11-17 23:32:13.02852	2021-11-17 23:32:13.02852
+23	34	5	2021-11-17 23:32:13.035978	2021-11-17 23:32:13.035978
+24	9	3	2021-11-17 23:32:13.043381	2021-11-17 23:32:13.043381
+25	46	9	2021-11-17 23:32:13.052502	2021-11-17 23:32:13.052502
+26	36	7	2021-11-17 23:32:13.060097	2021-11-17 23:32:13.060097
+27	48	8	2021-11-17 23:32:13.067753	2021-11-17 23:32:13.067753
+28	3	7	2021-11-17 23:32:13.075248	2021-11-17 23:32:13.075248
+29	11	5	2021-11-17 23:32:13.08326	2021-11-17 23:32:13.08326
+30	9	2	2021-11-17 23:32:13.090884	2021-11-17 23:32:13.090884
+31	13	5	2021-11-17 23:32:13.099326	2021-11-17 23:32:13.099326
+32	3	6	2021-11-17 23:32:13.107547	2021-11-17 23:32:13.107547
+33	47	7	2021-11-17 23:32:13.115063	2021-11-17 23:32:13.115063
+34	8	6	2021-11-17 23:32:13.123539	2021-11-17 23:32:13.123539
+35	42	3	2021-11-17 23:32:13.132041	2021-11-17 23:32:13.132041
+36	19	3	2021-11-17 23:32:13.139703	2021-11-17 23:32:13.139703
+37	40	5	2021-11-17 23:32:13.146634	2021-11-17 23:32:13.146634
+38	34	4	2021-11-17 23:32:13.15369	2021-11-17 23:32:13.15369
+39	23	5	2021-11-17 23:32:13.160802	2021-11-17 23:32:13.160802
+40	23	6	2021-11-17 23:32:13.171308	2021-11-17 23:32:13.171308
+41	9	7	2021-11-17 23:32:13.1785	2021-11-17 23:32:13.1785
+42	30	4	2021-11-17 23:32:13.186027	2021-11-17 23:32:13.186027
+43	46	3	2021-11-17 23:32:13.192906	2021-11-17 23:32:13.192906
+44	34	2	2021-11-17 23:32:13.199755	2021-11-17 23:32:13.199755
+45	7	9	2021-11-17 23:32:13.206923	2021-11-17 23:32:13.206923
+46	22	7	2021-11-17 23:32:13.214192	2021-11-17 23:32:13.214192
+47	39	2	2021-11-17 23:32:13.221169	2021-11-17 23:32:13.221169
+48	50	6	2021-11-17 23:32:13.228226	2021-11-17 23:32:13.228226
+49	18	7	2021-11-17 23:32:13.235708	2021-11-17 23:32:13.235708
+50	44	9	2021-11-17 23:32:13.243297	2021-11-17 23:32:13.243297
+\.
+
+
+--
+-- Name: comments_id_seq; Type: SEQUENCE SET; Schema: public; Owner: davidzombar
+--
+
+SELECT pg_catalog.setval('public.comments_id_seq', 75, true);
+
+
+--
+-- Name: teams_id_seq; Type: SEQUENCE SET; Schema: public; Owner: davidzombar
+--
+
+SELECT pg_catalog.setval('public.teams_id_seq', 4, true);
+
+
+--
+-- Name: tickets_id_seq; Type: SEQUENCE SET; Schema: public; Owner: davidzombar
+--
+
+SELECT pg_catalog.setval('public.tickets_id_seq', 50, true);
+
+
+--
+-- Name: users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: davidzombar
+--
+
+SELECT pg_catalog.setval('public.users_id_seq', 10, true);
+
+
+--
+-- Name: users_tickets_id_seq; Type: SEQUENCE SET; Schema: public; Owner: davidzombar
+--
+
+SELECT pg_catalog.setval('public.users_tickets_id_seq', 50, true);
+
+
+--
+-- Name: ar_internal_metadata ar_internal_metadata_pkey; Type: CONSTRAINT; Schema: public; Owner: davidzombar
+--
+
+ALTER TABLE ONLY public.ar_internal_metadata
+    ADD CONSTRAINT ar_internal_metadata_pkey PRIMARY KEY (key);
+
+
+--
+-- Name: comments comments_pkey; Type: CONSTRAINT; Schema: public; Owner: davidzombar
+--
+
+ALTER TABLE ONLY public.comments
+    ADD CONSTRAINT comments_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: schema_migrations schema_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: davidzombar
+--
+
+ALTER TABLE ONLY public.schema_migrations
+    ADD CONSTRAINT schema_migrations_pkey PRIMARY KEY (version);
+
+
+--
+-- Name: teams teams_pkey; Type: CONSTRAINT; Schema: public; Owner: davidzombar
+--
+
+ALTER TABLE ONLY public.teams
+    ADD CONSTRAINT teams_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: tickets tickets_pkey; Type: CONSTRAINT; Schema: public; Owner: davidzombar
+--
+
+ALTER TABLE ONLY public.tickets
+    ADD CONSTRAINT tickets_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: davidzombar
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT users_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: users_tickets users_tickets_pkey; Type: CONSTRAINT; Schema: public; Owner: davidzombar
+--
+
+ALTER TABLE ONLY public.users_tickets
+    ADD CONSTRAINT users_tickets_pkey PRIMARY KEY (id);
+
+
+--
+-- PostgreSQL database dump complete
+--
+

@@ -1,4 +1,5 @@
 class Ticket < ApplicationRecord
-    belongs_to :users_tickets
-    has_many :comments
+  has_many :users_tickets
+  has_many :users, through: :users_tickets
+  has_many :comments
 end

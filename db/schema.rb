@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(version: 2021_11_16_144808) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "user_id"
+    t.integer "ticket_id"
   end
 
   create_table "teams", force: :cascade do |t|

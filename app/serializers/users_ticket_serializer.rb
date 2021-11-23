@@ -3,5 +3,4 @@ class UsersTicketSerializer < ActiveModel::Serializer
 
   belongs_to :user
   belongs_to :ticket
-
 end
