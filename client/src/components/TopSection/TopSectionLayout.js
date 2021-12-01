@@ -1,11 +1,11 @@
 import React from 'react';
 
-import UsersTickets from './UsersTickets';
+import Tickets from './Tickets';
 
 function TopSection({ user }) {
   return (
     <div className='overflow'>
-      <UsersTickets user={user} />
+      <Tickets user={user} />
     </div>
   );
 }

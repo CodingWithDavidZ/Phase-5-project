@@ -1,6 +1,6 @@
 import React from 'react';
 
-function UsersTickets({ user }) {
+function Tickets({ user }) {
   const userTickets = user.tickets.map((ticket) => {
     //TODO: add ticket status to ticket table
     // function getStatus(status) {
@@ -117,4 +117,4 @@ function UsersTickets({ user }) {
   return <div>{userTickets}</div>;
 }
 
-export default UsersTickets;
+export default Tickets;
