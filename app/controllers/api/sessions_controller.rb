@@ -1,4 +1,4 @@
-class SessionsController < ApplicationController
+class Api::SessionsController < ApplicationController
   before_action :authorize, except: %i[create destroy]
 
   def create

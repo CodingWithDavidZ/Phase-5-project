@@ -1,38 +1,72 @@
-.App {
+.container {
+  display: grid;
+  grid-template-columns: 19.5% 80.5%;
+  grid-template-rows: 100% 100%;
+  gap: 5px 5px;
+  grid-auto-flow: row;
+  grid-template-areas:
+    'left-bar top-section top-section'
+    'left-bar bottom-section bottom-section';
+  height: 50vh;
+}
+
+.left-bar {
+  grid-area: left-bar;
+  background-color: hsl(0, 0%, 74%);
+}
+
+.top-section {
+  grid-area: top-section;
+  background-color: hsl(0, 0%, 85%);
+}
+
+.bottom-section {
+  grid-area: bottom-section;
+  background-color: hsl(0, 0%, 85%);
+}
+
+.login-box {
+  border: 5px solid hsl(0, 100%, 50%);
+  border-radius: 25px;
+  width: auto;
+  height: auto;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 25px;
+  background-color: hsl(0, 0%, 100%);
+}
+
+.login-buttons {
   text-align: center;
+  background-color: hsl(0, 0%, 71%);
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.overflow {
+  height: 100%;
+  width: auto;
+  /* background-color:#CCC; */
+  overflow-y: auto;
+  float: right;
+  position: relative;
+  margin-right: 10px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.ticket-box {
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 0px;
+  margin: 5px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.ticket {
+  list-style: none;
 }
 
-.App-link {
-  color: #61dafb;
+.alternate-color:nth-child(even) {
+  background-color: hsl(0, 0%, 50%);
 }
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.alternate-color:nth-child(odd) {
+  background-color: hsl(0, 0%, 75%);
 }

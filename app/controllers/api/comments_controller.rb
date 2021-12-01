@@ -1,4 +1,4 @@
-class CommentsController < ApplicationController
+class Api::CommentsController < ApplicationController
   before_action :set_comment, only: %i[show update destroy]
 
   # GET /comments
@@ -47,6 +47,6 @@ class CommentsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def comment_params
-    params.require(:comment).permit(:text, :created, :creator)
+    params.require(:comment).permit(:text, :created, :user_id)
   end
 end

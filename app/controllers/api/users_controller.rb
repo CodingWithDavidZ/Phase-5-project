@@ -1,5 +1,5 @@
-class UsersController < ApplicationController
-  before_action :set_user, only: %i[show update destroy]
+class Api::UsersController < ApplicationController
+  before_action :authorize, except: [:create, :update]
 
   # GET /users
   def index
@@ -10,7 +10,7 @@ class UsersController < ApplicationController
 
   # GET /users/1
   def show
-    render json: @user
+    render json: @current_user
   end
 
   # POST /users
@@ -40,6 +40,7 @@ class UsersController < ApplicationController
     params
       .require(:user)
       .permit(
+        :id,
         :username,
         :first_name,
         :last_name,

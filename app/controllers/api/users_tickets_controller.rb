@@ -1,4 +1,4 @@
-class UsersTicketsController < ApplicationController
+class Api::UsersTicketsController < ApplicationController
   before_action :set_users_ticket, only: %i[show update destroy]
 
   # GET /users_tickets

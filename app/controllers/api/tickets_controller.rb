@@ -1,4 +1,4 @@
-class TicketsController < ApplicationController
+class Api::TicketsController < ApplicationController
   before_action :set_ticket, only: %i[show update destroy]
 
   # GET /tickets
@@ -51,7 +51,6 @@ class TicketsController < ApplicationController
       .require(:ticket)
       .permit(
         :name,
-        :type,
         :department,
         :priority,
         :issue_description,
